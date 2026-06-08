@@ -3,7 +3,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h1>Welcome to the Axum Project Frontend!</h1>
+      <h1 class="text-3xl font-bold ">Axum Frontend project</h1>
     </>
   );
 }
