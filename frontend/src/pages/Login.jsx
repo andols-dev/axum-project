@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -12,8 +12,8 @@ const Login = () => {
   function validateForm(formData) {
     const errors = {};
 
-    if (!formData.username.trim()) {
-      errors.username = "User name is required";
+    if (!formData.email.trim()) {
+      errors.email = "email is required";
     }
 
     if (!formData.password.trim()) {
@@ -31,7 +31,7 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = validateForm(formData);
@@ -43,7 +43,15 @@ const Login = () => {
 
     setErrors({});
 
-    console.log("Form submitted:", formData);
+    const response = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await response.json();
+    console.log(data);
   };
   return (
     <div>
@@ -56,21 +64,21 @@ const Login = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="username"
+              for="email"
             >
-              Username
+              Email
             </label>
             <input
               className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              name="username"
-              value={formData.username}
+              id="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               type="text"
-              placeholder="Username"
+              placeholder="Email"
             />
-            {errors.username && (
-              <p className="text-red-500 text-xs italic">{errors.username}</p>
+            {errors.email && (
+              <p className="text-red-500 text-xs italic">{errors.email}</p>
             )}
           </div>
           <div className="mb-6">
@@ -85,6 +93,7 @@ const Login = () => {
               id="password"
               name="password"
               value={formData.password}
+              onChange={handleChange}
               type="password"
               placeholder="Password"
             />
