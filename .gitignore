@@ -42,3 +42,6 @@ rust-project.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,rust,rust-analyzer
+
+# SQLite database
+db/db.sqlite
