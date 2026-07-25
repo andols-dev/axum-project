@@ -5,3 +5,4 @@ pub async fn home() -> Json<Value> {
         "message": "Hej från Axum!"
     }))
 }
+
