@@ -68,7 +68,7 @@ export default function Register() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = validateForm(formData);
@@ -80,7 +80,16 @@ export default function Register() {
 
     setErrors({});
 
-    console.log("Form submitted:", formData);
+    const response = await fetch("http://localhost:3000/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.text();
+    console.log("Server response:", data);
   };
   const handleBlur = (e) => {
     setVisited((prev) => ({
