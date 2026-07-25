@@ -2,11 +2,13 @@ use axum::{Json, extract::State, http::StatusCode, response::IntoResponse};
 use serde::Deserialize;
 
 use crate::state::AppState;
+use crate::utils::password::hash_password;
 
 pub async fn register(
     State(state): State<AppState>,
     Json(payload): Json<RegisterRequest>,
 ) -> String {
+    let password_hash = hash_password(&payload.password);
     sqlx::query(
         r#"
         INSERT INTO users (
@@ -21,7 +23,7 @@ pub async fn register(
     .bind(&payload.first_name)
     .bind(&payload.last_name)
     .bind(&payload.email)
-    .bind(&payload.password)
+    .bind(&password_hash)
     .execute(&state.db)
     .await
     .unwrap();

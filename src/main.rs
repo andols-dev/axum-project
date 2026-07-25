@@ -3,6 +3,7 @@ use tower_http::cors::CorsLayer;
 mod handlers;
 mod routes;
 mod state;
+mod utils;
 
 use state::AppState;
 
