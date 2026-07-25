@@ -1,20 +1,32 @@
-use axum::{Json, http::StatusCode, response::IntoResponse};
+use axum::{Json, extract::State, http::StatusCode, response::IntoResponse};
 use serde::Deserialize;
 
-pub async fn register(Json(payload): Json<RegisterRequest>) -> impl IntoResponse {
-    if payload.email.is_empty() {
-        return (StatusCode::BAD_REQUEST, "Email missing".to_string());
-    }
+use crate::state::AppState;
 
-    if payload.password.is_empty() {
-        return (StatusCode::BAD_REQUEST, "Password missing".to_string());
-    }
-    println!("Register request:");
-    println!("First name: {}", payload.first_name);
-    println!("Last name: {}", payload.last_name);
-    println!("Email: {}", payload.email);
+pub async fn register(
+    State(state): State<AppState>,
+    Json(payload): Json<RegisterRequest>,
+) -> String {
+    sqlx::query(
+        r#"
+        INSERT INTO users (
+            first_name,
+            last_name,
+            email,
+            password_hash
+        )
+        VALUES (?, ?, ?, ?)
+        "#,
+    )
+    .bind(&payload.first_name)
+    .bind(&payload.last_name)
+    .bind(&payload.email)
+    .bind(&payload.password)
+    .execute(&state.db)
+    .await
+    .unwrap();
 
-    (StatusCode::OK, format!("Register {}", payload.email))
+    "User saved".to_string()
 }
 
 #[derive(Deserialize)]
