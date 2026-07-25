@@ -10,6 +10,13 @@ export default function Register() {
   });
 
   const [errors, setErrors] = useState({});
+  const [visited, setVisited] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
 
   function validateForm(formData) {
     const errors = {};
@@ -75,6 +82,13 @@ export default function Register() {
 
     console.log("Form submitted:", formData);
   };
+  const handleBlur = (e) => {
+    setVisited((prev) => ({
+      ...prev,
+      [e.target.name]: true,
+    }));
+    setErrors(validateForm(formData));
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-100 px-4">
@@ -99,15 +113,16 @@ export default function Register() {
               type="text"
               value={formData.firstName}
               onChange={handleChange}
+              onBlur={handleBlur}
               className={`w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2
                 ${
-                  errors.firstName
+                  visited.firstName && errors.firstName
                     ? "border-red-500 focus:ring-red-500"
                     : "border-slate-300 focus:ring-blue-500"
                 }`}
             />
 
-            {errors.firstName && (
+            {visited.firstName && errors.firstName && (
               <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>
             )}
           </div>
@@ -127,15 +142,16 @@ export default function Register() {
               type="text"
               value={formData.lastName}
               onChange={handleChange}
+              onBlur={handleBlur}
               className={`w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2
                 ${
-                  errors.lastName
+                  visited.lastName && errors.lastName
                     ? "border-red-500 focus:ring-red-500"
                     : "border-slate-300 focus:ring-blue-500"
                 }`}
             />
 
-            {errors.lastName && (
+            {visited.lastName && errors.lastName && (
               <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>
             )}
           </div>
@@ -155,15 +171,16 @@ export default function Register() {
               type="email"
               value={formData.email}
               onChange={handleChange}
+              onBlur={handleBlur}
               className={`w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2
                 ${
-                  errors.email
+                  visited.email && errors.email
                     ? "border-red-500 focus:ring-red-500"
                     : "border-slate-300 focus:ring-blue-500"
                 }`}
             />
 
-            {errors.email && (
+            {visited.email && errors.email && (
               <p className="mt-1 text-sm text-red-600">{errors.email}</p>
             )}
           </div>
@@ -183,15 +200,16 @@ export default function Register() {
               type="password"
               value={formData.password}
               onChange={handleChange}
+              onBlur={handleBlur}
               className={`w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2
                 ${
-                  errors.password
+                  visited.password && errors.password
                     ? "border-red-500 focus:ring-red-500"
                     : "border-slate-300 focus:ring-blue-500"
                 }`}
             />
 
-            {errors.password && (
+            {visited.password && errors.password && (
               <p className="mt-1 text-sm text-red-600">{errors.password}</p>
             )}
           </div>
@@ -211,15 +229,16 @@ export default function Register() {
               type="password"
               value={formData.confirmPassword}
               onChange={handleChange}
+              onBlur={handleBlur}
               className={`w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2
                 ${
-                  errors.confirmPassword
+                  visited.confirmPassword && errors.confirmPassword
                     ? "border-red-500 focus:ring-red-500"
                     : "border-slate-300 focus:ring-blue-500"
                 }`}
             />
 
-            {errors.confirmPassword && (
+            {visited.confirmPassword && errors.confirmPassword && (
               <p className="mt-1 text-sm text-red-600">
                 {errors.confirmPassword}
               </p>
