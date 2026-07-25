@@ -17,6 +17,7 @@ export default function Register() {
     password: false,
     confirmPassword: false,
   });
+  const [serverMessage, setServerMessage] = useState("");
 
   function validateForm(formData) {
     const errors = {};
@@ -88,8 +89,12 @@ export default function Register() {
       body: JSON.stringify(formData),
     });
 
-    const data = await response.text();
-    console.log("Server response:", data);
+    const data = await response.json();
+    if (!response.ok) {
+      setServerMessage(data.message);
+      return;
+    }
+    setServerMessage(data.message);
   };
   const handleBlur = (e) => {
     setVisited((prev) => ({
@@ -253,7 +258,9 @@ export default function Register() {
               </p>
             )}
           </div>
-
+          {serverMessage && (
+            <p className="text-red-600 text-sm">{serverMessage}</p>
+          )}
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors"
