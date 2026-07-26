@@ -17,6 +17,18 @@ function App() {
       <Layout>
         <h1 className="text-3xl font-bold ">Axum Frontend project</h1>
         <p>{message}</p>
+        <button
+          onClick={async () => {
+            const response = await fetch("http://localhost:3000/api/logout", {
+              method: "POST",
+              credentials: "include",
+            });
+
+            console.log(await response.text());
+          }}
+        >
+          Logout
+        </button>
         <Link
           to="/login"
           className="cursor-pointer text-blue-500 hover:text-blue-700"

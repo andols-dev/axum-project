@@ -4,7 +4,7 @@ use axum::{
 };
 
 use crate::{
-    handlers::{home::home, login::login, profile::profile, register::register},
+    handlers::{home::home, login::login, logout::logout, profile::profile, register::register},
     state::AppState,
 };
 
@@ -14,4 +14,5 @@ pub fn create_router() -> Router<AppState> {
         .route("/api/register", post(register))
         .route("/api/login", post(login))
         .route("/api/profile", get(profile))
+        .route("/api/logout", post(logout))
 }
