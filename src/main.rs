@@ -1,3 +1,5 @@
+use axum::http::{HeaderValue, Method};
+use tower_cookies::CookieManagerLayer;
 use tower_http::cors::CorsLayer;
 
 mod handlers;
@@ -14,9 +16,15 @@ async fn main() {
         .expect("Failed to connect to database");
     println!("{:?}", std::env::current_dir().unwrap());
     let app_state = AppState { db };
+    let cors = CorsLayer::new()
+        .allow_origin("http://localhost:5173".parse::<HeaderValue>().unwrap())
+        .allow_credentials(true)
+        .allow_methods([Method::GET, Method::POST])
+        .allow_headers([axum::http::header::CONTENT_TYPE]);
     let app = routes::create_router()
         .with_state(app_state)
-        .layer(CorsLayer::permissive());
+        .layer(cors)
+        .layer(CookieManagerLayer::new());
 
     let address = "0.0.0.0:3000";
     let listener = tokio::net::TcpListener::bind(address).await.unwrap();

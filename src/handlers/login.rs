@@ -1,6 +1,11 @@
+use std::mem::transmute;
+
+use crate::utils::session::generate_session_token;
 use axum::{Json, extract::State, http::StatusCode, response::IntoResponse};
 
 use serde::{Deserialize, Serialize};
+use tower_cookies::cookie::SameSite;
+use tower_cookies::{Cookie, Cookies};
 
 use crate::state::AppState;
 use crate::utils::password::verify_password;
@@ -21,6 +26,7 @@ pub struct LoginResponse {
 
 pub async fn login(
     State(state): State<AppState>,
+    cookies: Cookies,
     Json(payload): Json<LoginRequest>,
 ) -> impl IntoResponse {
     let user = sqlx::query("SELECT id, password_hash FROM users WHERE email = ?")
@@ -41,6 +47,8 @@ pub async fn login(
 
     let user = user.unwrap();
 
+    let user_id: i64 = user.get("id");
+
     let password_hash: String = user.get("password_hash");
 
     if !verify_password(&payload.password, &password_hash) {
@@ -52,6 +60,23 @@ pub async fn login(
             }),
         );
     }
+    let token = generate_session_token();
+
+    sqlx::query("INSERT INTO sessions (user_id, token) VALUES (?, ?)")
+        .bind(user_id)
+        .bind(&token)
+        .execute(&state.db)
+        .await
+        .unwrap();
+
+    cookies.add(
+        Cookie::build(("session", token))
+            .http_only(true)
+            .same_site(SameSite::Lax)
+            .path("/")
+            .into(),
+    );
+
     (
         StatusCode::OK,
         Json(LoginResponse {
