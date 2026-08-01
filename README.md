@@ -1,6 +1,6 @@
-# Rust Axum Project
+# Personal Knowledge Management System
 
-A full-stack web application built with **Rust**, **Axum**, and **React**. The project is currently under active development.
+This project is a web application currently under development. Its goal is to provide a digital knowledge base where users can organize, store, and retrieve information in one central place. The application is designed to make it easier to manage personal knowledge and resources over time.
 
 ## Tech Stack
 
@@ -19,11 +19,11 @@ A full-stack web application built with **Rust**, **Axum**, and **React**. The p
 - React
 - Vite
 - JavaScript
-- CSS
+- Tailwind CSS
 
 ## Features
 
-### ✅ Implemented
+### ✅ Implemented features
 
 - User registration
 - Secure password hashing with Argon2
@@ -33,6 +33,14 @@ A full-stack web application built with **Rust**, **Axum**, and **React**. The p
 - Logout functionality
 - SQLite database
 - SQLx database migrations
+
+### Future features
+
+- Create, read, update, and delete notes
+- Organize notes with tags and categories
+- Mark notes as favorites
+- Search saved notes
+- Markdown support for note formatting
 
 ## Getting Started
 
