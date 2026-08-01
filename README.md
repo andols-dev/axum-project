@@ -2,6 +2,15 @@
 
 This project is a web application currently under development. Its goal is to provide a digital knowledge base where users can organize, store, and retrieve information in one central place.
 
+## Status
+
+🚧 This project is currently under active development.
+
+**Current focus:**
+
+- Refactoring the authentication code to improve maintainability and code structure.
+- Implementing a CurrentUser extractor to simplify authentication and authorization in protected routes.
+
 ## Tech Stack
 
 ### Backend
@@ -34,7 +43,7 @@ This project is a web application currently under development. Its goal is to pr
 - SQLite database
 - SQLx database migrations
 
-### Future features
+### Planned features
 
 - Create, read, update, and delete notes
 - Organize notes with tags and categories
@@ -53,9 +62,3 @@ Login flow:
 3. The session is stored in the SQLite database.
 4. The token is sent to the browser as an HTTP-only cookie.
 5. Protected routes validate the session against the database.
-
-## Status
-
-🚧 This project is currently under active development.
-
-The project is continuously evolving as new features and improvements are implemented.
