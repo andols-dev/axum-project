@@ -1,6 +1,6 @@
 # Personal Knowledge Management System
 
-This project is a web application currently under development. Its goal is to provide a digital knowledge base where users can organize, store, and retrieve information in one central place. The application is designed to make it easier to manage personal knowledge and resources over time.
+This project is a web application currently under development. Its goal is to provide a digital knowledge base where users can organize, store, and retrieve information in one central place.
 
 ## Tech Stack
 
@@ -41,57 +41,6 @@ This project is a web application currently under development. Its goal is to pr
 - Mark notes as favorites
 - Search saved notes
 - Markdown support for note formatting
-
-## Getting Started
-
-### Clone the repository
-
-```bash
-git clone <repository-url>
-cd <project-folder>
-```
-
-### Backend
-
-Install the Rust toolchain and SQLx CLI.
-
-Run the database migrations:
-
-```bash
-sqlx migrate run
-```
-
-Start the backend:
-
-```bash
-cargo run
-```
-
-The backend runs on:
-
-```text
-http://localhost:3000
-```
-
-### Frontend
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-The frontend runs on:
-
-```text
-http://localhost:5173
-```
 
 ## Authentication
 
